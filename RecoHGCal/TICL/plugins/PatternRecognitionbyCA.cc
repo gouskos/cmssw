@@ -62,7 +62,6 @@ void PatternRecognitionbyCA::makeTracksters(const edm::Event &ev,
       effective_cluster_idx.insert(innerCluster);
       effective_cluster_idx.insert(outerCluster);
       if (algo_verbosity_ > Advanced) {
-      //if (algo_verbosity_ >=0) {
 	LogDebug("HGCPatterRecoByCA") << "New doublet " << doublet << " for trackster: " << result.size() << " InnerCl "
 				      << innerCluster << " " << layerClusters[innerCluster].x() << " "
 				      << layerClusters[innerCluster].y() << " " << layerClusters[innerCluster].z()
@@ -83,13 +82,7 @@ void PatternRecognitionbyCA::makeTracksters(const edm::Event &ev,
     result.push_back(tmp);
     tracksterId++;
 
-  }
-
-   // LG 
-  // result holds the num of tracksters after in-out and out-in
-  // loop over each doublet of each cluster
-  std::cout << "result.size() = " << result.size() << "\n";
-  
+  }  
 
   for (auto &trackster : result) {
     assert(trackster.vertices.size() <= trackster.vertex_multiplicity.size());
