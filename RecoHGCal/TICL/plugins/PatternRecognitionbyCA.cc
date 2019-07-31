@@ -62,12 +62,13 @@ void PatternRecognitionbyCA::makeTracksters(const edm::Event &ev,
       effective_cluster_idx.insert(innerCluster);
       effective_cluster_idx.insert(outerCluster);
       if (algo_verbosity_ > Advanced) {
-        LogDebug("HGCPatterRecoByCA") << "New doublet " << doublet << " for trackster: " << result.size() << " InnerCl "
-                                      << innerCluster << " " << layerClusters[innerCluster].x() << " "
-                                      << layerClusters[innerCluster].y() << " " << layerClusters[innerCluster].z()
-                                      << " OuterCl " << outerCluster << " " << layerClusters[outerCluster].x() << " "
-                                      << layerClusters[outerCluster].y() << " " << layerClusters[outerCluster].z()
-                                      << " " << tracksterId << std::endl;
+      //if (algo_verbosity_ >=0) {
+	LogDebug("HGCPatterRecoByCA") << "New doublet " << doublet << " for trackster: " << result.size() << " InnerCl "
+				      << innerCluster << " " << layerClusters[innerCluster].x() << " "
+				      << layerClusters[innerCluster].y() << " " << layerClusters[innerCluster].z()
+				      << " OuterCl " << outerCluster << " " << layerClusters[outerCluster].x() << " "
+				      << layerClusters[outerCluster].y() << " " << layerClusters[outerCluster].z()
+				      << " " << tracksterId << std::endl;
       }
     }
     for (auto const i : effective_cluster_idx) {
@@ -81,7 +82,15 @@ void PatternRecognitionbyCA::makeTracksters(const edm::Event &ev,
     std::copy(std::begin(effective_cluster_idx), std::end(effective_cluster_idx), std::back_inserter(tmp.vertices));
     result.push_back(tmp);
     tracksterId++;
+
   }
+
+   // LG 
+  // result holds the num of tracksters after in-out and out-in
+  // loop over each doublet of each cluster
+  std::cout << "result.size() = " << result.size() << "\n";
+  
+
   for (auto &trackster : result) {
     assert(trackster.vertices.size() <= trackster.vertex_multiplicity.size());
     for (size_t i = 0; i < trackster.vertices.size(); ++i) {

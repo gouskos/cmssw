@@ -105,5 +105,11 @@ void HGCDoublet::findNtuplets(std::vector<HGCDoublet> &allDoublets, HGCntuplet &
     for (unsigned int i = 0; i < numberOfOuterNeighbors; ++i) {
       allDoublets[outerNeighbors_[i]].findNtuplets(allDoublets, tmpNtuplet);
     }
+
+    unsigned int numberOfInnerNeighbors = innerNeighbors_.size();
+    for (unsigned int i = 0; i < numberOfInnerNeighbors; ++i) {
+      allDoublets[innerNeighbors_[i]].findNtuplets(allDoublets, tmpNtuplet);
+    }
+
   }
 }

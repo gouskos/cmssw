@@ -69,12 +69,13 @@ void HGCGraph::makeAndConnectDoublets(const TICLLayerTiles &histo,
                     isOuterClusterOfDoublets_[outerClusterId].push_back(doubletId);
                     auto &neigDoublets = isOuterClusterOfDoublets_[innerClusterId];
                     auto &thisDoublet = allDoublets_[doubletId];
+		    //std::cout << " verbosity_ = " << verbosity_ << "\n";
                     if (verbosity_ > Expert) {
-                      LogDebug("HGCGraph")
-                          << "Checking compatibility of doubletId: " << doubletId
-                          << " with all possible inners doublets link by the innerClusterId: " << innerClusterId
-                          << std::endl;
-                    }
+		      LogDebug("HGCGraph")
+			<< "Checking compatibility of doubletId: " << doubletId
+				<< " with all possible inners doublets link by the innerClusterId: " << innerClusterId
+				<< std::endl;
+		    }
                     bool isRootDoublet = thisDoublet.checkCompatibilityAndTag(
                         allDoublets_, neigDoublets, minCosTheta, minCosPointing, verbosity_ > Advanced);
                     if (isRootDoublet)
@@ -110,6 +111,7 @@ void HGCGraph::findNtuplets(std::vector<HGCDoublet::HGCntuplet> &foundNtuplets,
                             const unsigned int minClustersPerNtuplet) {
   HGCDoublet::HGCntuplet tmpNtuplet;
   tmpNtuplet.reserve(minClustersPerNtuplet);
+  std::cout << " theRootDoublets_.size = " << theRootDoublets_.size() << "\n"; 
   for (auto rootDoublet : theRootDoublets_) {
     tmpNtuplet.clear();
     allDoublets_[rootDoublet].findNtuplets(allDoublets_, tmpNtuplet);
