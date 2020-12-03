@@ -23,7 +23,8 @@ void HGCGraphT<TILES>::makeAndConnectDoublets(const TILES &histo,
                                               float etaLimitIncreaseWindow,
                                               int skip_layers,
                                               int maxNumberOfLayers,
-                                              float maxDeltaTime) {
+                                              float maxDeltaTime,
+					      float maxDeltaEnergy) {
   isOuterClusterOfDoublets_.clear();
   isOuterClusterOfDoublets_.resize(layerClusters.size());
   allDoublets_.clear();
@@ -156,6 +157,13 @@ void HGCGraphT<TILES>::makeAndConnectDoublets(const TILES &histo,
                         LogDebug("HGCGraph") << "Rejecting doublets due to timing!" << std::endl;
                       continue;
                     }
+		    if (maxDeltaEnergy != -1 &&
+			!areEnergyCompatible(innerClusterId, outerClusterId, layerClusters, maxDeltaEnergy)) {
+		      if (verbosity_ > Advanced)
+			LogDebug("HGCGraph") << "Rejecting doublets due to energy compatibility!" << std::endl;
+                      continue;
+                    }
+
                     allDoublets_.emplace_back(innerClusterId, outerClusterId, doubletId, &layerClusters, r.index);
                     if (verbosity_ > Advanced) {
                       LogDebug("HGCGraph")
@@ -204,6 +212,20 @@ void HGCGraphT<TILES>::makeAndConnectDoublets(const TILES &histo,
                          << allDoublets_.size() << std::endl;
   }
   // #endif
+}
+
+template <typename TILES>
+bool HGCGraphT<TILES>::areEnergyCompatible(int innerIdx,
+					   int outerIdx,
+					   const std::vector<reco::CaloCluster> &layerClusters,
+					   float maxDeltaEnergy) {
+
+
+  float en_asym = (layerClusters[innerIdx].energy() - layerClusters[outerIdx].energy())/(layerClusters[innerIdx].energy() + layerClusters[outerIdx].energy());
+  float en_asym_sq = en_asym*en_asym;
+  bool decision_ = true;
+  if (en_asym_sq>(maxDeltaEnergy*maxDeltaEnergy)) { decision_ = false; } 
+  return decision_;
 }
 
 template <typename TILES>

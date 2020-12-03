@@ -34,6 +34,7 @@ ticlTrackstersEM = _trackstersProducer.clone(
     min_cos_theta = 0.97,  # ~14 degrees
     min_cos_pointing = 0.9, # ~25 degrees
     max_delta_time = 3.,
+    max_delta_energy = 0.5,
     itername = "EM",
     algo_verbosity = 0,
 )

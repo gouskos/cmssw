@@ -50,6 +50,7 @@ namespace ticl {
     const double max_longitudinal_sigmaPCA_;
     const int min_clusters_per_ntuplet_;
     const float max_delta_time_;
+    const float max_delta_energy_;
     const std::string eidInputName_;
     const std::string eidOutputNameEnergy_;
     const std::string eidOutputNameId_;

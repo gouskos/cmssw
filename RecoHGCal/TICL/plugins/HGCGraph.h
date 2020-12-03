@@ -29,7 +29,13 @@ public:
                               float etaLimitIncreaseWindow,
                               int skip_layers,
                               int maxNumberOfLayers,
-                              float maxDeltaTime);
+                              float maxDeltaTime,
+			      float maxDeltaEnergy);
+
+  bool areEnergyCompatible(int innerIdx,
+			   int outerIdx,
+			   const std::vector<reco::CaloCluster> &layerClusters,
+			   float maxDeltaEnergy);
 
   bool areTimeCompatible(int innerIdx,
                          int outerIdx,

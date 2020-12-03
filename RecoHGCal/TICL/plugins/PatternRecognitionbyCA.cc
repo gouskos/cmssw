@@ -39,6 +39,7 @@ PatternRecognitionbyCA<TILES>::PatternRecognitionbyCA(const edm::ParameterSet &c
       max_longitudinal_sigmaPCA_(conf.getParameter<double>("max_longitudinal_sigmaPCA")),
       min_clusters_per_ntuplet_(min_layers_per_trackster_),
       max_delta_time_(conf.getParameter<double>("max_delta_time")),
+      max_delta_energy_(conf.getParameter<double>("max_delta_energy")),
       eidInputName_(conf.getParameter<std::string>("eid_input_name")),
       eidOutputNameEnergy_(conf.getParameter<std::string>("eid_output_name_energy")),
       eidOutputNameId_(conf.getParameter<std::string>("eid_output_name_id")),
@@ -101,7 +102,8 @@ void PatternRecognitionbyCA<TILES>::makeTracksters(
                                     etaLimitIncreaseWindow_,
                                     skip_layers_,
                                     rhtools_.lastLayer(type),
-                                    max_delta_time_);
+                                    max_delta_time_,
+				    max_delta_energy_);
 
   theGraph_->findNtuplets(foundNtuplets, seedIndices, min_clusters_per_ntuplet_, out_in_dfs_, max_out_in_hops_);
   //#ifdef FP_DEBUG
